@@ -1,0 +1,21 @@
+[Unit]
+Description=Voice commands for Vestaboard
+Wants=network-online.target
+After=network-online.target sound.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+# Change User and all /home/pi paths to your Raspberry Pi account and checkout.
+User=pi
+SupplementaryGroups=audio
+WorkingDirectory=/home/pi/vestaboard/raspberry-pi
+EnvironmentFile=/home/pi/vestaboard/raspberry-pi/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/pi/vestaboard/raspberry-pi/.venv/bin/python /home/pi/vestaboard/raspberry-pi/voice_to_vestaboard.py
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
